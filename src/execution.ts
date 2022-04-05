@@ -15,6 +15,10 @@ export async function executeGradleBuild(executable: string | undefined, root: s
     // Use the provided executable, or look for a Gradle wrapper script to run
     const toExecute = executable ?? gradlew.locateGradleWrapperScript(root)
     verifyIsExecutableScript(toExecute)
+
+    core.info(`Executing Gradle build with '${toExecute}'`)
+    core.info(`Executing Gradle build with arguments:\n${args.join('\n')}`)
+
     const status: number = await exec.exec(toExecute, args, {
         cwd: root,
         ignoreReturnCode: true
